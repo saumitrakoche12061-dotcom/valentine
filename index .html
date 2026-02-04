@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Sanika ❤️</title>
+  <style>
+    *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+    body{
+      margin:0;height:100vh;overflow:hidden;
+      background:linear-gradient(135deg,#ff758c,#ff7eb3);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .card{
+      background:#fff;padding:30px;border-radius:22px;
+      box-shadow:0 20px 40px rgba(0,0,0,.25);
+      text-align:center;max-width:420px;width:90%;z-index:2;
+    }
+    h1{color:#e63946;margin-bottom:10px}
+    p{color:#555}
+    .buttons{margin-top:25px;display:flex;gap:20px;justify-content:center}
+    button{
+      padding:12px 28px;border:none;border-radius:25px;
+      font-size:16px;cursor:pointer;transition:.2s
+    }
+    button:hover{transform:scale(1.1)}
+    .yes{background:#e63946;color:#fff}
+    .no{background:#ccc}/* Hearts */
+.hearts{position:fixed;inset:0;pointer-events:none;z-index:1}
+.heart{position:absolute;top:-20px;font-size:22px;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+
+/* Fireworks */
+.firework{position:fixed;width:6px;height:6px;border-radius:50%;animation:boom 1s ease-out forwards}
+@keyframes boom{to{transform:scale(18);opacity:0}}
+
+/* Secret message popup */
+.popup{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.6);z-index:5;display:none
+}
+.popup-box{
+  background:#fff;padding:25px;border-radius:20px;
+  max-width:360px;width:85%;text-align:center;
+  animation:pop .6s ease
+}
+@keyframes pop{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+.popup-box h2{color:#e63946}
+
+  </style>
+</head>
+<body><div class="hearts" id="hearts"></div><audio id="bgMusic" loop>
+  <source src="perfect.mp3" type="audio/mpeg">
+</audio>
+<div id="tapToPlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.65);display:flex;align-items:center;justify-content:center;z-index:10;color:white;font-size:22px;text-align:center;cursor:pointer;">❤️ Tap anywhere to start the music ❤️</div>
+<div class="card">
+  <h1>Hey Sanika ❤️</h1>
+  <p>I just want to ask you something…</p>
+  <h2>Will you be my Valentine? 💖<br><small>— Saumitra</small></h2>  <div class="buttons">
+    <button class="yes" onclick="yesClicked()">Yes 😍</button>
+    <button class="no" onmouseover="this.style.transform='translateX(60px)'">No 🙈</button>
+  </div>
+</div><!-- Secret Message --><div class="popup" id="popup">
+  <div class="popup-box">
+    <h2>💌 Secret Message</h2>
+    <p id="secretText"></p>
+  </div>
+</div><script>
+  const tap=document.getElementById('tapToPlay');
+  const music=document.getElementById('bgMusic');
+  tap.addEventListener('click',()=>{music.play();tap.style.display='none';});
+  function yesClicked(){
+    if(navigator.vibrate) navigator.vibrate([200,100,200]);
+    // Fireworks
+    for(let i=0;i<25;i++) firework();
+    // Hearts
+    setInterval(makeHeart,200);
+    // Show secret message after delay
+    setTimeout(showMessage,1200);
+  }
+
+  function makeHeart(){
+    const h=document.createElement('div');
+    h.className='heart';h.innerText='❤️';
+    h.style.left=Math.random()*100+'vw';
+    h.style.animationDuration=(Math.random()*3+3)+'s';
+    document.getElementById('hearts').appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  }
+
+  function firework(){
+    const f=document.createElement('div');
+    f.className='firework';
+    f.style.left=Math.random()*100+'vw';
+    f.style.top=Math.random()*100+'vh';
+    f.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1000);
+  }
+
+  function showMessage(){
+    const popup=document.getElementById('popup');
+    const text="Thank you so so so much ❤️<br>You are the love of my life 🥰<br><br>Majha shona Baad 🥰🥰";
+    let i=0;popup.style.display='flex';
+    const p=document.getElementById('secretText');p.innerHTML='';
+    const type=setInterval(()=>{
+      p.innerHTML+=text.charAt(i);i++;
+      if(i>=text.length) clearInterval(type);
+    },70);
+  }
+</script></body>
+</html>
